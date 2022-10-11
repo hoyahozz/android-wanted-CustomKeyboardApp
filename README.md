@@ -48,8 +48,8 @@
 
 ## 🤔 Issue
 
-- `[{behavior}] : {something}`
-- e.g. : `[FEATURE] : 프로젝트 세팅`
+- `[{behavior}] {something}`
+- e.g. : `[FEATURE] 프로젝트 세팅`
 
 ## 🤲 Pull Request
 
