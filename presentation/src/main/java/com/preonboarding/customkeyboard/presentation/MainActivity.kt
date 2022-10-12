@@ -1,13 +1,28 @@
 package com.preonboarding.customkeyboard.presentation
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import android.widget.Toast
+import androidx.activity.viewModels
+import com.preonboarding.customkeyboard.presentation.base.BaseActivity
+import com.preonboarding.customkeyboard.presentation.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity<ActivityMainBinding>() {
+
+    override val layoutResourceId: Int = R.layout.activity_main
+    private val viewModel: MainViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding.viewModel = viewModel
+
+        setupDataBinding()
+    }
+
+    private fun setupDataBinding() {
+        viewModel.localBookmarks.observe(this) {
+            Toast.makeText(this, it.toString(), Toast.LENGTH_SHORT).show()
+        }
     }
 }
