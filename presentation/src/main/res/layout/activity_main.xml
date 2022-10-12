@@ -8,6 +8,13 @@
         android:layout_height="match_parent"
         tools:context=".presentation.MainActivity">
 
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
         <TextView
             android:id="@+id/tv_get"
             style="@style/NotoSansBold20"
@@ -32,7 +39,6 @@
             android:background="?attr/selectableItemBackground"
             android:clickable="true"
             android:focusable="true"
-            android:onClick="@{() -> viewModel.saveBookmark()}"
             android:text="INSERT"
             android:textColor="@color/gray"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -48,7 +54,6 @@
             android:background="?attr/selectableItemBackground"
             android:clickable="true"
             android:focusable="true"
-            android:onClick="@{() -> viewModel.deleteBookmark()}"
             android:text="DELETE"
             android:textColor="@color/main"
             app:layout_constraintBottom_toBottomOf="parent"

@@ -19,6 +19,7 @@ class MainViewModel @Inject constructor(
     private val deleteBookmarkUseCase: DeleteBookmarkUseCase,
 ) : ViewModel() {
 
+    // 북마크 (복사된 단어) 리스트
     private val _localBookmarks = MutableLiveData<List<Bookmark>>()
     val localBookmarks: LiveData<List<Bookmark>> get() = _localBookmarks
 
@@ -28,9 +29,9 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun saveBookmark() {
+    fun saveBookmark(copiedText: String) {
         viewModelScope.launch {
-            saveBookmarkUseCase.invoke(Bookmark("String"))
+            saveBookmarkUseCase.invoke(Bookmark(name = copiedText))
         }
     }
 
