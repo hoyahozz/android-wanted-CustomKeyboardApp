@@ -1,3 +1,7 @@
 <resources>
     <string name="main_title">Hello World!</string>
+
+    <!-- clipboard -->
+    <string name="clipboard_title">클립보드</string>
+    <string name="clipboard_delete_btn_desc">클립보드 삭제 버튼입니다.</string>
 </resources>
