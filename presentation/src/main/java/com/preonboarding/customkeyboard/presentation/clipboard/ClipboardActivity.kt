@@ -39,6 +39,19 @@ class ClipboardActivity : BaseActivity<ActivityClipboardBinding>() {
 
     private fun deleteBookmark(bookmark: Bookmark) {
         binding.root.showSnackbar(bookmark.toString())
+        kotlin.runCatching {
+            viewModel.deleteBookmark(bookmark = bookmark)
+        }
+            .onSuccess {
+                binding.root.showSnackbar(
+                    message = "${bookmark.name} 삭제 완료"
+                )
+            }
+            .onFailure {
+                binding.root.showSnackbar(
+                    message = it.toString()
+                )
+            }
     }
 
     private fun initAdapter() {
