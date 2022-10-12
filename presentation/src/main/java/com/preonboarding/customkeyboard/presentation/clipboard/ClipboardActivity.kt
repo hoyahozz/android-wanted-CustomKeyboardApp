@@ -1,4 +1,4 @@
-package com.preonboarding.customkeyboard.presentation.test
+package com.preonboarding.customkeyboard.presentation.clipboard
 
 import android.content.ClipboardManager
 import android.content.Context
@@ -8,13 +8,13 @@ import androidx.activity.viewModels
 import com.preonboarding.customkeyboard.presentation.R
 import com.preonboarding.customkeyboard.presentation.common.base.BaseActivity
 import com.preonboarding.customkeyboard.presentation.common.extension.showSnackbar
-import com.preonboarding.customkeyboard.presentation.databinding.ActivityTestBinding
+import com.preonboarding.customkeyboard.presentation.databinding.ActivityClipboardBinding
 import com.preonboarding.customkeyboard.presentation.main.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class TestActivity : BaseActivity<ActivityTestBinding>() {
-    override val layoutResourceId: Int = R.layout.activity_test
+class ClipboardActivity : BaseActivity<ActivityClipboardBinding>() {
+    override val layoutResourceId: Int = R.layout.activity_clipboard
     private val viewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {

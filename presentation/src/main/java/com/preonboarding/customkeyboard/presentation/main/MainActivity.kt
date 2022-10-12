@@ -6,7 +6,7 @@ import androidx.activity.viewModels
 import com.preonboarding.customkeyboard.presentation.R
 import com.preonboarding.customkeyboard.presentation.common.base.BaseActivity
 import com.preonboarding.customkeyboard.presentation.databinding.ActivityMainBinding
-import com.preonboarding.customkeyboard.presentation.test.TestActivity
+import com.preonboarding.customkeyboard.presentation.clipboard.ClipboardActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -19,7 +19,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         super.onCreate(savedInstanceState)
         binding.viewModel = viewModel
         binding.tvGet.setOnClickListener {
-            startActivity(Intent(this, TestActivity::class.java))
+            startActivity(Intent(this, ClipboardActivity::class.java))
         }
     }
 
