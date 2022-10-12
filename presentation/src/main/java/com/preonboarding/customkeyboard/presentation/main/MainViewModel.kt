@@ -1,4 +1,4 @@
-package com.preonboarding.customkeyboard.presentation
+package com.preonboarding.customkeyboard.presentation.main
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

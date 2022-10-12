@@ -61,7 +61,7 @@
 
         <variable
             name="viewModel"
-            type="com.preonboarding.customkeyboard.presentation.MainViewModel" />
+            type="com.preonboarding.customkeyboard.presentation.main.MainViewModel" />
 
     </data>
 </layout>

@@ -1,8 +1,9 @@
-package com.preonboarding.customkeyboard.presentation
+package com.preonboarding.customkeyboard.presentation.main
 
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
+import com.preonboarding.customkeyboard.presentation.R
 import com.preonboarding.customkeyboard.presentation.base.BaseActivity
 import com.preonboarding.customkeyboard.presentation.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
