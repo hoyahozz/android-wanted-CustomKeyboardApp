@@ -1,5 +1,4 @@
 android {
-    namespace 'com.preonboarding.customkeyboard'
     compileSdk 32
 
     defaultConfig {
