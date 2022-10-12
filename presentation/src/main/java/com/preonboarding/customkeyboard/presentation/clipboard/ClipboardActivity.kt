@@ -34,7 +34,12 @@ class ClipboardActivity : BaseActivity<ActivityClipboardBinding>() {
     }
 
     private fun pasteBookmark(bookmark: Bookmark) {
-        binding.root.showSnackbar(bookmark.toString())
+        // focus 상태일때만
+        binding.etClipboard.apply {
+            if (isFocused) {
+                text.append(bookmark.name)
+            }
+        }
     }
 
     private fun deleteBookmark(bookmark: Bookmark) {
