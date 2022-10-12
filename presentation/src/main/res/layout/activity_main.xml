@@ -8,13 +8,6 @@
         android:layout_height="match_parent"
         tools:context=".presentation.MainActivity">
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-
         <TextView
             android:id="@+id/tv_get"
             style="@style/NotoSansBold20"
@@ -23,7 +16,6 @@
             android:background="?attr/selectableItemBackground"
             android:clickable="true"
             android:focusable="true"
-            android:onClick="@{() -> viewModel.getBookmarks()}"
             android:text="@string/main_title"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
