@@ -10,6 +10,7 @@
 
         <TextView
             android:id="@+id/tv_get"
+            style="@style/NotoSansBold20"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackground"
@@ -17,9 +18,6 @@
             android:focusable="true"
             android:onClick="@{() -> viewModel.getBookmarks()}"
             android:text="@string/main_title"
-            android:textColor="@color/black"
-            android:textSize="24sp"
-            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -27,6 +25,7 @@
 
         <TextView
             android:id="@+id/tv_insert"
+            style="@style/NotoSansBold20"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
@@ -35,14 +34,14 @@
             android:focusable="true"
             android:onClick="@{() -> viewModel.saveBookmark()}"
             android:text="INSERT"
-            android:textSize="30dp"
-            android:textStyle="bold"
+            android:textColor="@color/gray"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/tv_delete"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/tv_delete"
+            style="@style/NotoSansBold20"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
@@ -51,8 +50,7 @@
             android:focusable="true"
             android:onClick="@{() -> viewModel.deleteBookmark()}"
             android:text="DELETE"
-            android:textSize="30dp"
-            android:textStyle="bold"
+            android:textColor="@color/main"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/tv_insert" />
