@@ -22,8 +22,25 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
+        <service
+            android:name=".presentation.keyboard.KeyBoardService"
+            android:enabled="true"
+            android:exported="true"
+            android:label="MyKeyboard"
+            android:permission="android.permission.BIND_INPUT_METHOD">
+            <meta-data
+                android:name="android.view.im"
+                android:resource="@xml/xml"/>
+
+            <intent-filter>
+                <action android:name="android.view.InputMethod"/>
+            </intent-filter>
+        </service>
+
         <activity android:name=".presentation.clipboard.ClipboardActivity" />
+
     </application>
 
 </manifest>

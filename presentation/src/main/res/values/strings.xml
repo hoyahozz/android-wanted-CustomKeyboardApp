@@ -1,7 +1,16 @@
 <resources>
     <string name="main_title">Hello World!</string>
 
+    <string name="key_space">Space</string>
+    <string name="key_back">Back</string>
+    <string name="key_shift">Shift</string>
+    <string name="key_enter">Enter</string>
+    <string name="key_short">단</string>
+    <string name="key_special">!@#</string>
+
+
     <!-- clipboard -->
     <string name="clipboard_title">클립보드</string>
     <string name="clipboard_delete_btn_desc">클립보드 삭제 버튼입니다.</string>
+
 </resources>
