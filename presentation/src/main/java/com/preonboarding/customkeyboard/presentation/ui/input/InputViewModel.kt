@@ -23,12 +23,16 @@ class InputViewModel @Inject constructor(
     private var localBookmarkList = mutableListOf<Bookmark>()
 
     // 북마크 (복사된 단어) 리스트
+    private val _localBookmarks = MutableLiveData<List<Bookmark>>()
+    val localBookmarks: LiveData<List<Bookmark>> get() = _localBookmarks
+
+    // 현재 선택된 툴바 메뉴
     private val _toolbarMenu = MutableLiveData<ToolbarMenu>(ToolbarMenu.KEYBOARD)
     val toolbarMenu: LiveData<ToolbarMenu> get() = _toolbarMenu
 
-    // 북마크 (복사된 단어) 리스트
-    private val _localBookmarks = MutableLiveData<List<Bookmark>>()
-    val localBookmarks: LiveData<List<Bookmark>> get() = _localBookmarks
+    // 클립보드 화면에서 선택한 붙여 넣기 할 북마크
+    private val _curPasteBookmark = MutableLiveData<Bookmark>()
+    val curPasteBookmark: LiveData<Bookmark> get() = _curPasteBookmark
 
     init {
         // localBookmark 변수 초기화 이후에 init block 호출
@@ -78,6 +82,10 @@ class InputViewModel @Inject constructor(
         else {
             _toolbarMenu.value = ToolbarMenu.KEYBOARD
         }
+    }
+
+    fun updatePasteBookmark(bookmark: Bookmark) {
+        _curPasteBookmark.value = bookmark
     }
 
     companion object {
