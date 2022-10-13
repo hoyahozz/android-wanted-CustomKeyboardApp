@@ -73,6 +73,7 @@ class QwertyKeyboard(
 
 
     fun getLayout(): LinearLayout {
+        koreaLanguageMaker = KoreaLanguageMaker(inputConnection!!)
         setLayoutComponents()
         return qwertyKeyboardLayout
     }
@@ -97,7 +98,7 @@ class QwertyKeyboard(
                             }
                             getString(R.string.key_back) -> {
                                 setSpecialKey(it, R.string.key_back)
-                                clickBackKeyListener()
+                                keyboardListener = clickBackKeyListener()
                             }
                             getString(R.string.key_shift) -> {
                                 setSpecialKey(it, R.string.key_shift)
