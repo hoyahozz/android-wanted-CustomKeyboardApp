@@ -156,7 +156,58 @@ class QwertyKeyboard(
             val layout = layoutLines[SHIFT_CHANGE_LINE].children.toList()
             val mainKeyText = layout[keyNum].findViewById<TextView>(R.id.main_key_text)
 
-            
+            if (isCaps) {
+                when (mainKeyText.text.toString()) {
+                    "ㅃ" -> {
+                        mainKeyText.text = "ㅂ"
+                    }
+                    "ㅉ" -> {
+                        mainKeyText.text = "ㅈ"
+                    }
+                    "ㄸ" -> {
+                        mainKeyText.text = "ㄷ"
+                    }
+                    "ㄲ" -> {
+                        mainKeyText.text = "ㄱ"
+                    }
+                    "ㅆ" -> {
+                        mainKeyText.text = "ㅅ"
+                    }
+                    "ㅒ" -> {
+                        mainKeyText.text = "ㅐ"
+                    }
+                    "ㅖ" -> {
+                        mainKeyText.text = "ㅔ"
+                    }
+                }
+            } else {
+                when (mainKeyText.text.toString()) {
+                    "ㅂ" -> {
+                        mainKeyText.text = "ㅃ"
+                    }
+                    "ㅈ" -> {
+                        mainKeyText.text = "ㅉ"
+                    }
+                    "ㄷ" -> {
+                        mainKeyText.text = "ㄸ"
+                    }
+                    "ㄱ" -> {
+                        mainKeyText.text = "ㄲ"
+                    }
+                    "ㅅ" -> {
+                        mainKeyText.text = "ㅆ"
+                    }
+                    "ㅐ" -> {
+                        mainKeyText.text = "ㅒ"
+                    }
+                    "ㅔ" -> {
+                        mainKeyText.text = "ㅖ"
+                    }
+                }
+            }
+
+        }
+        isCaps = !isCaps
     }
     private fun setSpecialKey(txt : TextView, string : Int) {
         txt.text = context.getString(string)
