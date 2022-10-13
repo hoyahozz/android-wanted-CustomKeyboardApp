@@ -1,11 +1,12 @@
 package com.preonboarding.customkeyboard.presentation.main
 
+import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.viewModels
 import com.preonboarding.customkeyboard.presentation.R
-import com.preonboarding.customkeyboard.presentation.base.BaseActivity
+import com.preonboarding.customkeyboard.presentation.common.base.BaseActivity
 import com.preonboarding.customkeyboard.presentation.databinding.ActivityMainBinding
+import com.preonboarding.customkeyboard.presentation.clipboard.ClipboardActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -17,13 +18,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.viewModel = viewModel
-
-        setupDataBinding()
-    }
-
-    private fun setupDataBinding() {
-        viewModel.localBookmarks.observe(this) {
-            Toast.makeText(this, it.toString(), Toast.LENGTH_SHORT).show()
+        binding.tvGet.setOnClickListener {
+            startActivity(Intent(this, ClipboardActivity::class.java))
         }
     }
+
+
 }

@@ -38,6 +38,9 @@
                 <action android:name="android.view.InputMethod"/>
             </intent-filter>
         </service>
+
+        <activity android:name=".presentation.clipboard.ClipboardActivity" />
+
     </application>
 
 </manifest>

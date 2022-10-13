@@ -1,4 +1,4 @@
-package com.preonboarding.customkeyboard.presentation.base
+package com.preonboarding.customkeyboard.presentation.common.base
 
 import android.os.Bundle
 import android.view.View
