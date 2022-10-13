@@ -39,11 +39,17 @@ class QwertyKeyboard(
         arrayOf("", "-", "\'", "\"", ":", ";", ",", "?")
     )
     private val layoutLines = ArrayList<LinearLayout>()
+    var inputConnection: InputConnection? = null
+    lateinit var koreaLanguageMaker: KoreaLanguageMaker
+    var isCaps: Boolean = false
+    private val SHIFT_CHANGE_LINE = 1
 
 
     fun init() {
         qwertyKeyboardLayout =
             layoutInflater.inflate(R.layout.qwerty_keyboard, null) as LinearLayout
+
+        koreaLanguageMaker = KoreaLanguageMaker(inputConnection!!)
 
         val numberLine = qwertyKeyboardFindViewById(R.id.numpad_line)
         val firstLine = qwertyKeyboardFindViewById(R.id.first_line)
@@ -81,15 +87,26 @@ class QwertyKeyboard(
                 val mainKeyText = layout[keyItem].findViewById<TextView>(R.id.main_key_text)
                 val subKeyText = layout[keyItem].findViewById<TextView>(R.id.sub_key_text)
 
+                var keyboardListener: View.OnClickListener? = null
+
                 with(context){
                     mainKeyText.let {
                         when (qwertyMainKeyboardText[keyLine][keyItem]) {
                             getString(R.string.key_space) -> setSpecialKey(it, R.string.key_space)
                             getString(R.string.key_back) -> setSpecialKey(it, R.string.key_back)
-                            getString(R.string.key_shift) -> setSpecialKey(it, R.string.key_shift)
+                            getString(R.string.key_shift) -> {
+                                setSpecialKey(it, R.string.key_shift)
+                                keyboardListener = clickShiftKeyListener()
+                            }
                             getString(R.string.key_enter) -> setSpecialKey(it, R.string.key_enter)
-                            getString(R.string.key_short) -> setSpecialKey(it, R.string.key_short)
-                            getString(R.string.key_special) -> setSpecialKey(it, R.string.key_special)
+                            getString(R.string.key_short) -> setSpecialKey(
+                                it,
+                                R.string.key_short
+                            )
+                            getString(R.string.key_special) -> setSpecialKey(
+                                it,
+                                R.string.key_special
+                            )
                             else -> {
                                 mainKeyText.text = qwertyMainKeyboardText[keyLine][keyItem]
                                 if (keyLine in 1..3) {
@@ -98,14 +115,49 @@ class QwertyKeyboard(
                                         visibility = View.VISIBLE
                                     }
                                 }
+                                keyboardListener = clickKeyboardListener(mainKeyText)
                             }
                         }
+                        layout[keyItem].setOnClickListener(keyboardListener)
                     }
                 }
             }
         }
     }
 
+    private fun clickKeyboardListener(keyTxt: TextView): View.OnClickListener {
+        val clickListener = (View.OnClickListener {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                inputConnection?.requestCursorUpdates(InputConnection.CURSOR_UPDATE_IMMEDIATE)
+            }
+
+            try {
+                //숫자가 아니면 오류가 발생함
+                Integer.parseInt(keyTxt.text.toString())
+
+                //숫자라면 기존 한국어 초기화
+                koreaLanguageMaker.directlyCommit()
+                inputConnection?.commitText(keyTxt.text.toString(), 1)
+            } catch (e: NumberFormatException) {
+                koreaLanguageMaker.commit(keyTxt.text.toString().toCharArray().get(0))
+            }
+            if (isCaps) changeCaps()
+
+        })
+        keyTxt.setOnClickListener(clickListener)
+        return clickListener
+    }
+    private fun clickShiftKeyListener() = View.OnClickListener {
+        changeCaps()
+    }
+
+    private fun changeCaps() {
+        for (keyNum in qwertyMainKeyboardText[SHIFT_CHANGE_LINE].indices) {
+            val layout = layoutLines[SHIFT_CHANGE_LINE].children.toList()
+            val mainKeyText = layout[keyNum].findViewById<TextView>(R.id.main_key_text)
+
+            
+    }
     private fun setSpecialKey(txt : TextView, string : Int) {
         txt.text = context.getString(string)
         txt.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12F)

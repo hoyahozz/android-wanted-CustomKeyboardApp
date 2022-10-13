@@ -22,6 +22,7 @@ class KeyBoardService : InputMethodService() {
 
     override fun onCreateInputView(): View {
         qwertyKeyboard = QwertyKeyboard(applicationContext, layoutInflater).apply {
+            inputConnection = currentInputConnection
             init()
         }
 
@@ -30,7 +31,9 @@ class KeyBoardService : InputMethodService() {
 
     override fun updateInputViewShown() {
         super.updateInputViewShown()
+        currentInputConnection.finishComposingText()
         keyboardFrame.removeAllViews()
+        qwertyKeyboard.inputConnection = currentInputConnection
         keyboardFrame.addView(qwertyKeyboard.getLayout())
     }
 }
