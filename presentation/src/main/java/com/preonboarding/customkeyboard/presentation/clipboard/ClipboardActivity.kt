@@ -9,7 +9,7 @@ import com.preonboarding.customkeyboard.presentation.R
 import com.preonboarding.customkeyboard.presentation.common.base.BaseActivity
 import com.preonboarding.customkeyboard.presentation.common.extension.showSnackbar
 import com.preonboarding.customkeyboard.presentation.databinding.ActivityClipboardBinding
-import com.preonboarding.customkeyboard.presentation.main.MainViewModel
+import com.preonboarding.customkeyboard.presentation.ui.main.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

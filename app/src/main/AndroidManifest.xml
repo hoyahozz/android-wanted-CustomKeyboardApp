@@ -15,7 +15,7 @@
         android:theme="@style/Theme.AndroidwantedCustomKeyboardApp"
         tools:targetApi="31">
         <activity
-            android:name=".presentation.main.MainActivity"
+            android:name=".presentation.ui.main.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -40,7 +40,7 @@
         </service>
 
         <activity android:name=".presentation.clipboard.ClipboardActivity" />
-
+        <activity android:name=".presentation.ui.input.InputActivity" />
     </application>
 
 </manifest>
