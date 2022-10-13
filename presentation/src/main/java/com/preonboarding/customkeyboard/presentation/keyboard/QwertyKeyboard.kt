@@ -23,8 +23,15 @@ class QwertyKeyboard(
         arrayOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "0"),
         arrayOf("ㅂ", "ㅈ", "ㄷ", "ㄱ", "ㅅ", "ㅛ", "ㅕ", "ㅑ", "ㅐ", "ㅔ"),
         arrayOf("ㅁ", "ㄴ", "ㅇ", "ㄹ", "ㅎ", "ㅗ", "ㅓ", "ㅏ", "ㅣ"),
-        arrayOf("Shift", "ㅋ", "ㅌ", "ㅊ", "ㅍ", "ㅠ", "ㅜ", "ㅡ", "DEL"),
-        arrayOf("!@#", ",", "SPACE", ".", "Enter")
+        arrayOf(context.getString(R.string.key_shift), "ㅋ", "ㅌ", "ㅊ", "ㅍ", "ㅠ", "ㅜ", "ㅡ", context.getString(R.string.key_back)),
+        arrayOf(
+            context.getString(R.string.key_special),
+            context.getString(R.string.key_short),
+            ",",
+            context.getString(R.string.key_space),
+            ".",
+            context.getString(R.string.key_enter)
+        )
     )
     private val qwertySubKeyboardText = arrayOf(
         arrayOf("ㅃ", "ㅉ", "ㄸ", "ㄲ", "ㅆ", "/", "<", ">", "ㅒ", "ㅖ"),
@@ -38,31 +45,27 @@ class QwertyKeyboard(
         qwertyKeyboardLayout =
             layoutInflater.inflate(R.layout.qwerty_keyboard, null) as LinearLayout
 
-        val numberLine = qwertyKeyboardLayout.findViewById<LinearLayout>(
-            R.id.numpad_line
-        )
-        val firstLine = qwertyKeyboardLayout.findViewById<LinearLayout>(
-            R.id.first_line
-        )
-        val secondLine = qwertyKeyboardLayout.findViewById<LinearLayout>(
-            R.id.second_line
-        )
-        val thirdLine = qwertyKeyboardLayout.findViewById<LinearLayout>(
-            R.id.third_line
-        )
-        val fourthLine = qwertyKeyboardLayout.findViewById<LinearLayout>(
-            R.id.fourth_line
-        )
+        val numberLine = qwertyKeyboardFindViewById(R.id.numpad_line)
+        val firstLine = qwertyKeyboardFindViewById(R.id.first_line)
+        val secondLine = qwertyKeyboardFindViewById(R.id.second_line)
+        val thirdLine = qwertyKeyboardFindViewById(R.id.third_line)
+        val fourthLine = qwertyKeyboardFindViewById(R.id.fourth_line)
 
-        layoutLines.clear()
-        layoutLines.add(numberLine)
-        layoutLines.add(firstLine)
-        layoutLines.add(secondLine)
-        layoutLines.add(thirdLine)
-        layoutLines.add(fourthLine)
+        layoutLines.apply {
+            clear()
+            add(numberLine)
+            add(firstLine)
+            add(secondLine)
+            add(thirdLine)
+            add(fourthLine)
+        }
 
         setLayoutComponents()
     }
+
+    private fun qwertyKeyboardFindViewById(id: Int) =
+        qwertyKeyboardLayout.findViewById<LinearLayout>(id)
+
 
     fun getLayout(): LinearLayout {
         setLayoutComponents()
@@ -78,34 +81,33 @@ class QwertyKeyboard(
                 val mainKeyText = layout[keyItem].findViewById<TextView>(R.id.main_key_text)
                 val subKeyText = layout[keyItem].findViewById<TextView>(R.id.sub_key_text)
 
-                when (qwertyMainKeyboardText[keyLine][keyItem]) {
-                    "SPACE" -> {
-                        mainKeyText.text = "SPACE"
-                    }
-                    "DEL" -> {
-                        mainKeyText.text = "Back"
-                    }
-                    "Shift" -> {
-                        mainKeyText.text = "Shift"
-                    }
-                    "Enter" -> {
-                        mainKeyText.text = "Enter"
-                    }
-                    "!@#" -> {
-                        mainKeyText.text = "!@#"
-                    }
-                    else -> {
-                        mainKeyText.text = qwertyMainKeyboardText[keyLine][keyItem]
-                        if (keyLine in 1..3) {
-                            subKeyText.apply {
-                                text = qwertySubKeyboardText[keyLine - 1][keyItem]
-                                visibility = View.VISIBLE
+                with(context){
+                    mainKeyText.let {
+                        when (qwertyMainKeyboardText[keyLine][keyItem]) {
+                            getString(R.string.key_space) -> setSpecialKey(it, R.string.key_space)
+                            getString(R.string.key_back) -> setSpecialKey(it, R.string.key_back)
+                            getString(R.string.key_shift) -> setSpecialKey(it, R.string.key_shift)
+                            getString(R.string.key_enter) -> setSpecialKey(it, R.string.key_enter)
+                            getString(R.string.key_short) -> setSpecialKey(it, R.string.key_short)
+                            getString(R.string.key_special) -> setSpecialKey(it, R.string.key_special)
+                            else -> {
+                                mainKeyText.text = qwertyMainKeyboardText[keyLine][keyItem]
+                                if (keyLine in 1..3) {
+                                    subKeyText.apply {
+                                        text = qwertySubKeyboardText[keyLine - 1][keyItem]
+                                        visibility = View.VISIBLE
+                                    }
+                                }
                             }
                         }
                     }
                 }
-
             }
         }
+    }
+
+    private fun setSpecialKey(txt : TextView, string : Int) {
+        txt.text = context.getString(string)
+        txt.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12F)
     }
 }

@@ -4,6 +4,6 @@
     <string name="key_back">Back</string>
     <string name="key_shift">Shift</string>
     <string name="key_enter">Enter</string>
-    <string name="key_change_lang">한/영</string>
+    <string name="key_short">단</string>
     <string name="key_special">!@#</string>
 </resources>
