@@ -8,13 +8,13 @@ import javax.inject.Inject
 class KoreaLanguageMaker @Inject constructor(
     private val inputConnection: InputConnection
 ){
-    fun commit(c: Char){
-        directlyCommit()
-    }
+//    fun commit(c: Char){
+//        directlyCommit()
+//    }
 
-    fun directlyCommit(){
-        inputConnection.commitText(toString(), 1)//입력부분
-    }
+//    fun directlyCommit(){
+//        inputConnection.commitText(toString(), 1)//입력부분
+//    }
 
     private var choSung: Char = MIN_VALUE
     private var jungSung: Char = MIN_VALUE

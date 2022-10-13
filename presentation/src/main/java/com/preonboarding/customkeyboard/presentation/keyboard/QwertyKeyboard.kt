@@ -13,7 +13,6 @@ import androidx.core.view.children
 import com.preonboarding.customkeyboard.presentation.R
 import dagger.hilt.android.AndroidEntryPoint
 
-
 class QwertyKeyboard(
     private var context: Context,
     private var layoutInflater: LayoutInflater
@@ -92,8 +91,14 @@ class QwertyKeyboard(
                 with(context){
                     mainKeyText.let {
                         when (qwertyMainKeyboardText[keyLine][keyItem]) {
-                            getString(R.string.key_space) -> setSpecialKey(it, R.string.key_space)
-                            getString(R.string.key_back) -> setSpecialKey(it, R.string.key_back)
+                            getString(R.string.key_space) -> {
+                                setSpecialKey(it, R.string.key_space)
+                                keyboardListener = clickSpaceKeyListener()
+                            }
+                            getString(R.string.key_back) -> {
+                                setSpecialKey(it, R.string.key_back)
+                                clickBackKeyListener()
+                            }
                             getString(R.string.key_shift) -> {
                                 setSpecialKey(it, R.string.key_shift)
                                 keyboardListener = clickShiftKeyListener()
@@ -136,10 +141,10 @@ class QwertyKeyboard(
                 Integer.parseInt(keyTxt.text.toString())
 
                 //숫자라면 기존 한국어 초기화
-                koreaLanguageMaker.directlyCommit()
+                koreaLanguageMaker.directCommitHangul()
                 inputConnection?.commitText(keyTxt.text.toString(), 1)
             } catch (e: NumberFormatException) {
-                koreaLanguageMaker.commit(keyTxt.text.toString().toCharArray().get(0))
+                koreaLanguageMaker.commitHangul(keyTxt.text.toString().toCharArray().get(0))
             }
             if (isCaps) changeCaps()
 
@@ -212,5 +217,13 @@ class QwertyKeyboard(
     private fun setSpecialKey(txt : TextView, string : Int) {
         txt.text = context.getString(string)
         txt.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12F)
+    }
+
+    private fun clickSpaceKeyListener() = View.OnClickListener {
+        koreaLanguageMaker.commitSpace()
+    }
+
+    private fun clickBackKeyListener() = View.OnClickListener {
+        koreaLanguageMaker.deleteHangul()
     }
 }
