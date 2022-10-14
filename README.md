@@ -94,3 +94,70 @@
   - 버튼 클릭 시 `ripple` 이펙트가 나타나도록 구현
   - 반응형으로 모든 기기에서 동일하게 보여지도록 구현
 - **다이얼로그 UI 구현**
+
+## 이현섭
+
+https://user-images.githubusercontent.com/35682233/195629876-03ce9f00-712f-4fe1-9b90-eba514506998.mp4
+
+- **기본적인 키보드 ui**
+
+```kotlin
+private lateinit var qwertyKeyboardLayout: LinearLayout
+    private val qwertyMainKeyboardText = arrayOf(
+        arrayOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "0"),
+        arrayOf("ㅂ", "ㅈ", "ㄷ", "ㄱ", "ㅅ", "ㅛ", "ㅕ", "ㅑ", "ㅐ", "ㅔ"),
+        arrayOf("ㅁ", "ㄴ", "ㅇ", "ㄹ", "ㅎ", "ㅗ", "ㅓ", "ㅏ", "ㅣ"),
+        arrayOf(context.getString(R.string.key_shift), "ㅋ", "ㅌ", "ㅊ", "ㅍ", "ㅠ", "ㅜ", "ㅡ", context.getString(R.string.key_back)),
+        arrayOf(
+            context.getString(R.string.key_special),
+            context.getString(R.string.key_short),
+            ",",
+            context.getString(R.string.key_space),
+            ".",
+            context.getString(R.string.key_enter)
+        )
+    )
+    private val qwertySubKeyboardText = arrayOf(
+        arrayOf("ㅃ", "ㅉ", "ㄸ", "ㄲ", "ㅆ", "/", "<", ">", "ㅒ", "ㅖ"),
+        arrayOf("!", "@", "#", "%", "^", "&", "*", "(", ")"),
+        arrayOf("", "-", "\'", "\"", ":", ";", ",", "?")
+    )
+```
+
+- **모든앱에 사용하게 만들기**
+
+manifest
+
+```kotlin
+<service
+            android:name=".presentation.keyboard.KeyBoardService"
+            android:enabled="true"
+            android:exported="true"
+            android:label="MyKeyboard"
+            android:permission="android.permission.BIND_INPUT_METHOD">
+            <meta-data
+                android:name="android.view.im"
+                android:resource="@xml/xml"/>
+
+            <intent-filter>
+                <action android:name="android.view.InputMethod"/>
+            </intent-filter>
+        </service>
+```
+
+- **쉬프트 키 눌럿을 때 구현**
+
+```kotlin
+private fun changeCaps() {
+        for (keyNum in qwertyMainKeyboardText[SHIFT_CHANGE_LINE].indices) {
+            val layout = layoutLines[SHIFT_CHANGE_LINE].children.toList()
+            val mainKeyText = layout[keyNum].findViewById<TextView>(R.id.main_key_text)
+
+            if (isCaps) {
+                ...
+						}
+        isCaps = !isCaps
+    }
+```
+
+- 해당 ui에서 글씨를 바꾸게 했습니다.
