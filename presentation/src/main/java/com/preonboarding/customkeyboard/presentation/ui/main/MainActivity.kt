@@ -32,6 +32,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         binding.tvPay.setOnClickListener {
             payDialog.show()
         }
+
+        binding.ivKeyboard.setOnClickListener {
+            startActivity(Intent(this, InputActivity::class.java))
+        }
     }
 
     private fun initAdapter() {
