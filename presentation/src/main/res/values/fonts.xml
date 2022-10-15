@@ -13,6 +13,10 @@
         <item name="android:includeFontPadding">false</item>
     </style>
 
+    <style name="NotoSansRegular10" parent="NotoSansRegular">
+        <item name="android:textSize">@dimen/font_size_10</item>
+    </style>
+
     <style name="NotoSansRegular12" parent="NotoSansRegular">
         <item name="android:textSize">@dimen/font_size_12</item>
     </style>
