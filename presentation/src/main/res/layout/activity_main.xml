@@ -106,7 +106,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:text="명이 참여했어요!"
+                    android:text="명이 참여했어요"
                     android:textColor="@color/dark_gray"
                     app:layout_constraintStart_toEndOf="@id/tv_keyboard_content_count"
                     app:layout_constraintTop_toBottomOf="@id/tv_keyboard_sub_title" />
@@ -118,7 +118,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginTop="40dp"
-                    android:text="🎉플레이키보드 첫 이벤트 테마를 공개합니다.🎉"
+                    android:text="플레이키보드 첫 이벤트 테마를 공개합니다."
                     android:textColor="@color/black"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_keyboard_content_part" />
