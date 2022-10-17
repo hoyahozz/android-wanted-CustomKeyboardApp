@@ -1,12 +1,18 @@
 package com.preonboarding.customkeyboard.presentation.keyboard
 
 import android.content.Context
+import android.graphics.drawable.BitmapDrawable
 import android.os.Build
+import android.util.Log
 import android.util.TypedValue
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.view.inputmethod.InputConnection
+import android.widget.FrameLayout
 import android.widget.LinearLayout
+import android.widget.PopupWindow
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.children
@@ -37,6 +43,8 @@ class QwertyKeyboard(
         arrayOf("!", "@", "#", "%", "^", "&", "*", "(", ")"),
         arrayOf("", "-", "\'", "\"", ":", ";", ",", "?")
     )
+    private val shortcutKeyText = listOf("음성", "ㅋㅋㅋㅋ", "ㅠㅠㅠㅠ", "안녕하세요", "감사합니다", "한자", "설정", "ㅇㅅㅇ", "하트", "웃음")
+    private lateinit var shortcutKeyPopup: PopupWindow
     private val layoutLines = ArrayList<LinearLayout>()
     var inputConnection: InputConnection? = null
     lateinit var koreaLanguageMaker: KoreaLanguageMaker
@@ -105,10 +113,10 @@ class QwertyKeyboard(
                                 keyboardListener = clickShiftKeyListener()
                             }
                             getString(R.string.key_enter) -> setSpecialKey(it, R.string.key_enter)
-                            getString(R.string.key_short) -> setSpecialKey(
-                                it,
-                                R.string.key_short
-                            )
+//                            getString(R.string.key_short) -> setSpecialKey(
+//                                it,
+//                                R.string.key_short
+//                            )
                             getString(R.string.key_special) -> setSpecialKey(
                                 it,
                                 R.string.key_special
@@ -122,12 +130,40 @@ class QwertyKeyboard(
                                     }
                                 }
                                 keyboardListener = clickKeyboardListener(mainKeyText)
+                                if (keyLine==4 && keyItem == 1){//단버튼 위치
+                                    layout[keyItem].setOnLongClickListener {
+                                        longClickShortcutKey()
+                                        Log.d("로그","길게 눌림")
+                                        true
+                                    }
+                                }
                             }
                         }
                         layout[keyItem].setOnClickListener(keyboardListener)
                     }
                 }
             }
+        }
+    }
+    //단축키 길게 눌럿을때
+    private fun longClickShortcutKey() {
+        val custom: View = LayoutInflater.from(context)
+            .inflate(R.layout.short_key_layout, FrameLayout(context))
+        val popup = PopupWindow(context)
+        popup.contentView = custom
+
+        if(popup.isShowing){
+            popup.update(30, 0, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        } else {
+            popup.width = ViewGroup.LayoutParams.WRAP_CONTENT
+            popup.height = ViewGroup.LayoutParams.WRAP_CONTENT
+            popup.isOutsideTouchable = true
+            popup.showAtLocation(qwertyKeyboardLayout, Gravity.CENTER, 0, 0)
+        }
+
+        custom.findViewById<TextView>(R.id.shortcut_key_btn_sound).setOnClickListener {
+
+            popup.dismiss()
         }
     }
 
