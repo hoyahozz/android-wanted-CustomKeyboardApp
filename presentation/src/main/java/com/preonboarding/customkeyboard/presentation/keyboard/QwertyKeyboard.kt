@@ -2,6 +2,7 @@ package com.preonboarding.customkeyboard.presentation.keyboard
 
 import android.content.Context
 import android.os.Build
+import android.util.Log
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
@@ -11,12 +12,14 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.children
 import com.preonboarding.customkeyboard.presentation.R
+import com.preonboarding.customkeyboard.presentation.keyboard.shortcutkeys.ShortcutPopup
 import dagger.hilt.android.AndroidEntryPoint
 
 class QwertyKeyboard(
     private var context: Context,
     private var layoutInflater: LayoutInflater
 ) {
+
     private lateinit var qwertyKeyboardLayout: LinearLayout
     private val qwertyMainKeyboardText = arrayOf(
         arrayOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "0"),
@@ -43,7 +46,6 @@ class QwertyKeyboard(
     var isCaps: Boolean = false
     private val SHIFT_CHANGE_LINE = 1
 
-
     fun init() {
         qwertyKeyboardLayout =
             layoutInflater.inflate(R.layout.qwerty_keyboard, null) as LinearLayout
@@ -56,6 +58,7 @@ class QwertyKeyboard(
         val thirdLine = qwertyKeyboardFindViewById(R.id.third_line)
         val fourthLine = qwertyKeyboardFindViewById(R.id.fourth_line)
 
+
         layoutLines.apply {
             clear()
             add(numberLine)
@@ -66,6 +69,7 @@ class QwertyKeyboard(
         }
 
         setLayoutComponents()
+
     }
 
     private fun qwertyKeyboardFindViewById(id: Int) =
@@ -151,10 +155,15 @@ class QwertyKeyboard(
 
         })
         keyTxt.setOnClickListener(clickListener)
+
         return clickListener
     }
     private fun clickShiftKeyListener() = View.OnClickListener {
         changeCaps()
+    }
+
+    private fun shortcutClickListener() = View.OnClickListener {
+
     }
 
     private fun changeCaps() {

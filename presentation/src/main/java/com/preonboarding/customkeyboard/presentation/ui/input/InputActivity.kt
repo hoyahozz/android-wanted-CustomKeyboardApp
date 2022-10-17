@@ -2,6 +2,9 @@ package com.preonboarding.customkeyboard.presentation.ui.input
 
 import android.content.ClipboardManager
 import android.os.Bundle
+import android.view.GestureDetector
+import android.view.MotionEvent
+import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import com.preonboarding.customkeyboard.domain.model.Bookmark
@@ -10,6 +13,7 @@ import com.preonboarding.customkeyboard.presentation.R
 import com.preonboarding.customkeyboard.presentation.common.base.BaseActivity
 import com.preonboarding.customkeyboard.presentation.common.extension.showSnackbar
 import com.preonboarding.customkeyboard.presentation.databinding.ActivityInputBinding
+import com.preonboarding.customkeyboard.presentation.keyboard.shortcutkeys.ShortcutPopup
 import com.preonboarding.customkeyboard.presentation.ui.input.clipboard.ClipboardFragment
 import com.preonboarding.customkeyboard.presentation.ui.input.keyboard.KeyboardFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -19,6 +23,7 @@ class InputActivity : BaseActivity<ActivityInputBinding>() {
     override val layoutResourceId: Int = R.layout.activity_input
     private lateinit var clipboard: ClipboardManager
     private val viewModel: InputViewModel by viewModels()
+    val main : ActivityInputBinding by lazy { ActivityInputBinding.inflate(layoutInflater) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +32,13 @@ class InputActivity : BaseActivity<ActivityInputBinding>() {
         initToolbar()
         initClipboard()
         observeData()
+        setShortcutKey()
+    }
+
+
+    private fun setShortcutKey(){
+        val shortcutPopup = ShortcutPopup(this )
+        shortcutPopup.getKey(binding.etInput, findViewById(R.id.action_key_short))
     }
 
     private fun setUpDataBinding() {

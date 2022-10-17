@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:orientation="horizontal"
+    android:rowCount="2"
+    android:columnCount="5"
+    android:layout_height="wrap_content"
+    android:background="@color/gray">
+
+    <TextView
+        android:id="@+id/btn1"
+        android:layout_width="60dp"
+        android:layout_height="30dp"
+        android:drawableStart="@drawable/ic_baseline_mic_24"
+        android:gravity="center"
+        android:textSize="12dp"/>
+
+    <TextView
+        android:id="@+id/btn2"
+        android:layout_width="60dp"
+        android:textColor="@color/white"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="ㅋㅋㅋㅋ"
+        android:textSize="12dp" />
+    <TextView
+        android:id="@+id/btn3"
+        android:layout_width="60dp"
+        android:textColor="@color/white"
+        android:layout_height="30dp"
+        android:gravity="center"
+        android:text="ㅠㅠㅠㅠ"
+        android:textSize="12dp"/>
+    <TextView
+        android:id="@+id/btn4"
+        android:layout_width="60dp"
+        android:layout_height="30dp"
+        android:textColor="@color/white"
+        android:text="안녕하세요"
+        android:gravity="center"
+        android:textSize="12dp"/>
+    <TextView
+        android:id="@+id/btn5"
+        android:layout_width="60dp"
+        android:textColor="@color/white"
+        android:layout_height="30dp"
+        android:text="감사합니다"
+        android:gravity="center"
+
+        android:textSize="12dp"/>
+    <TextView
+        android:id="@+id/btn6"
+        android:layout_width="60dp"
+        android:layout_height="30dp"
+        android:textStyle="bold"
+        android:text="한자"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:textSize="12dp"/>
+    <TextView
+        android:id="@+id/btn7"
+        android:layout_width="60dp"
+        android:layout_height="30dp"
+        android:gravity="center"
+        android:drawableStart="@drawable/ic_baseline_settings_24"
+        android:textSize="12dp"/>
+    <TextView
+        android:id="@+id/btn8"
+        android:layout_width="60dp"
+        android:layout_height="30dp"
+        android:gravity="center"
+        android:textColor="@color/white"
+
+        android:text=" ?"
+        android:textSize="12dp"/>
+    <TextView
+        android:id="@+id/btn9"
+        android:layout_width="60dp"
+        android:textColor="@color/white"
+        android:layout_height="30dp"
+        android:gravity="center"
+
+        android:text="❤"
+        android:textSize="12dp"/>
+    <TextView
+        android:id="@+id/btn10"
+        android:layout_width="60dp"
+        android:textColor="@color/white"
+        android:layout_height="30dp"
+        android:gravity="center"
+        android:text="😄"
+        android:textSize="12dp"/>
+</GridLayout>
