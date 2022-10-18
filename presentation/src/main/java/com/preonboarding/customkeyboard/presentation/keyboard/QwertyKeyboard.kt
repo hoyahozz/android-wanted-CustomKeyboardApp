@@ -1,30 +1,32 @@
 package com.preonboarding.customkeyboard.presentation.keyboard
 
+
+import android.app.Activity
 import android.content.Context
-import android.graphics.drawable.BitmapDrawable
 import android.os.Build
 import android.util.Log
 import android.util.TypedValue
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.view.inputmethod.InputConnection
-import android.widget.FrameLayout
-import android.widget.LinearLayout
-import android.widget.PopupWindow
-import android.widget.TextView
+import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.view.children
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
+import com.google.android.material.internal.ContextUtils.getActivity
 import com.preonboarding.customkeyboard.presentation.R
+import com.preonboarding.customkeyboard.presentation.keyboard.shortcutkeys.MotionEventUpState
 import com.preonboarding.customkeyboard.presentation.keyboard.shortcutkeys.ShortcutPopup
-import dagger.hilt.android.AndroidEntryPoint
+import com.preonboarding.customkeyboard.presentation.ui.input.InputActivity
+import com.preonboarding.customkeyboard.presentation.ui.main.MainActivity
 
-class QwertyKeyboard(
-    private var context: Context,
+
+class QwertyKeyboard (
+    private var  context: Context,
     private var layoutInflater: LayoutInflater
 ) {
-
     private lateinit var qwertyKeyboardLayout: LinearLayout
     private val qwertyMainKeyboardText = arrayOf(
         arrayOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "0"),
@@ -45,13 +47,38 @@ class QwertyKeyboard(
         arrayOf("!", "@", "#", "%", "^", "&", "*", "(", ")"),
         arrayOf("", "-", "\'", "\"", ":", ";", ",", "?")
     )
-    private val shortcutKeyText = listOf("음성", "ㅋㅋㅋㅋ", "ㅠㅠㅠㅠ", "안녕하세요", "감사합니다", "한자", "설정", "ㅇㅅㅇ", "하트", "웃음")
+    private val shortcutKeyText = listOf("", "ㅋㅋㅋㅋ", "ㅠㅠㅠㅠ", "안녕하세요", "감사합니다", "", "", " ?", "❤", "\uD83D\uDE04")
+    private var shortcutText : String = ","
     private lateinit var shortcutKeyPopup: PopupWindow
     private val layoutLines = ArrayList<LinearLayout>()
     var inputConnection: InputConnection? = null
     lateinit var koreaLanguageMaker: KoreaLanguageMaker
     var isCaps: Boolean = false
     private val SHIFT_CHANGE_LINE = 1
+    private var TOUCH_UP_STATE = MotionEventUpState.NONE
+    val popup = PopupWindow(context)
+
+    var shortKeyisLongClick = false
+    var liveText: MutableLiveData<MotionEvent> = MutableLiveData()
+
+    var shortcutKeyXY = IntArray(2)
+    var shortcutWidth = 0
+    var shortcutHight = 0
+
+    var btn1XY = IntArray(2)
+    var btn2XY = IntArray(2)
+    var btn3XY = IntArray(2)
+    var btn4XY = IntArray(2)
+    var btn5XY = IntArray(2)
+    var btn6XY = IntArray(2)
+    var btn7XY = IntArray(2)
+    var btn8XY = IntArray(2)
+    var btn9XY = IntArray(2)
+    var btn10XY = IntArray(2)
+
+    var btnHightArr = IntArray(10)
+    var btnWidthArr = IntArray(10)
+
 
     fun init() {
         qwertyKeyboardLayout =
@@ -76,11 +103,14 @@ class QwertyKeyboard(
         }
 
         setLayoutComponents()
+        initShortcut()
+
 
     }
 
     private fun qwertyKeyboardFindViewById(id: Int) =
         qwertyKeyboardLayout.findViewById<LinearLayout>(id)
+
 
 
     fun getLayout(): LinearLayout {
@@ -98,7 +128,9 @@ class QwertyKeyboard(
                 val mainKeyText = layout[keyItem].findViewById<TextView>(R.id.main_key_text)
                 val subKeyText = layout[keyItem].findViewById<TextView>(R.id.sub_key_text)
 
+
                 var keyboardListener: View.OnClickListener? = null
+
 
                 with(context){
                     mainKeyText.let {
@@ -136,7 +168,7 @@ class QwertyKeyboard(
                                 if (keyLine==4 && keyItem == 1){//단버튼 위치
                                     layout[keyItem].setOnLongClickListener {
                                         longClickShortcutKey()
-                                        Log.d("로그","길게 눌림")
+                                        shortcutTextView.text = shortcutText
                                         true
                                     }
                                 }
@@ -148,13 +180,46 @@ class QwertyKeyboard(
             }
         }
     }
-    //단축키 길게 눌럿을때
-    private fun longClickShortcutKey() {
+
+    private fun initShortcut(){
+
         val custom: View = LayoutInflater.from(context)
-            .inflate(R.layout.short_key_layout, FrameLayout(context))
-        val popup = PopupWindow(context)
+            .inflate(R.layout.keyboard_shortcut_keys, GridLayout(context))
         popup.contentView = custom
 
+        val ShortcutViews = arrayOf(
+            custom.findViewById<TextView>(R.id.btn1),
+            custom.findViewById<TextView>(R.id.btn2),
+            custom.findViewById<TextView>(R.id.btn3),
+            custom.findViewById<TextView>(R.id.btn4),
+            custom.findViewById<TextView>(R.id.btn5),
+            custom.findViewById<TextView>(R.id.btn6),
+            custom.findViewById<TextView>(R.id.btn7),
+            custom.findViewById<TextView>(R.id.btn8),
+            custom.findViewById<TextView>(R.id.btn9),
+            custom.findViewById<TextView>(R.id.btn10)
+
+        )
+
+        for (i in 0..9){
+            ShortcutViews[i].setOnClickListener {
+                inputConnection?.commitText(shortcutKeyText[i], 1)
+                shortcutText = ShortcutViews[i].text.toString()
+                popup.dismiss()
+            }
+        }
+
+    }
+
+    private fun longClickShortcutKey(){
+
+        showPopup()
+
+    }
+
+
+
+    fun showPopup(){
         if(popup.isShowing){
             popup.update(30, 0, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         } else {
@@ -164,14 +229,13 @@ class QwertyKeyboard(
             popup.showAtLocation(qwertyKeyboardLayout, Gravity.CENTER, 0, 0)
         }
 
-        custom.findViewById<TextView>(R.id.shortcut_key_btn_sound).setOnClickListener {
 
-            popup.dismiss()
-        }
     }
+
 
     private fun clickKeyboardListener(keyTxt: TextView): View.OnClickListener {
         val clickListener = (View.OnClickListener {
+
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 inputConnection?.requestCursorUpdates(InputConnection.CURSOR_UPDATE_IMMEDIATE)
             }
@@ -195,10 +259,6 @@ class QwertyKeyboard(
     }
     private fun clickShiftKeyListener() = View.OnClickListener {
         changeCaps()
-    }
-
-    private fun shortcutClickListener() = View.OnClickListener {
-
     }
 
     private fun changeCaps() {
@@ -271,4 +331,9 @@ class QwertyKeyboard(
     private fun clickBackKeyListener() = View.OnClickListener {
         koreaLanguageMaker.deleteHangul()
     }
+    companion object{
+     var activity :Activity? = null
+    }
+
+
 }

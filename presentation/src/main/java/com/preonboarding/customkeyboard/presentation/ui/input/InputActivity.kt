@@ -4,6 +4,7 @@ import android.content.ClipboardManager
 import android.os.Bundle
 import android.view.GestureDetector
 import android.view.MotionEvent
+import android.widget.QuickContactBadge
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
@@ -13,6 +14,7 @@ import com.preonboarding.customkeyboard.presentation.R
 import com.preonboarding.customkeyboard.presentation.common.base.BaseActivity
 import com.preonboarding.customkeyboard.presentation.common.extension.showSnackbar
 import com.preonboarding.customkeyboard.presentation.databinding.ActivityInputBinding
+import com.preonboarding.customkeyboard.presentation.keyboard.QwertyKeyboard
 import com.preonboarding.customkeyboard.presentation.keyboard.shortcutkeys.ShortcutPopup
 import com.preonboarding.customkeyboard.presentation.ui.input.clipboard.ClipboardFragment
 import com.preonboarding.customkeyboard.presentation.ui.input.keyboard.KeyboardFragment
@@ -23,7 +25,8 @@ class InputActivity : BaseActivity<ActivityInputBinding>() {
     override val layoutResourceId: Int = R.layout.activity_input
     private lateinit var clipboard: ClipboardManager
     private val viewModel: InputViewModel by viewModels()
-    val main : ActivityInputBinding by lazy { ActivityInputBinding.inflate(layoutInflater) }
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,16 +35,11 @@ class InputActivity : BaseActivity<ActivityInputBinding>() {
         initToolbar()
         initClipboard()
         observeData()
-        setShortcutKey()
-    }
 
-
-    private fun setShortcutKey(){
-        val shortcutPopup = ShortcutPopup(this )
-        shortcutPopup.getKey(binding.etInput, findViewById(R.id.action_key_short))
     }
 
     private fun setUpDataBinding() {
+
         viewModel.toolbarMenu.observe(this) {
             binding.layoutToolbar.toolbarMenu = it
 
@@ -130,4 +128,22 @@ class InputActivity : BaseActivity<ActivityInputBinding>() {
                 }
         }
     }
+
+//
+//    fun registerMyOnTouchListener( listener: MyOnTouchListener){
+//        onTouchListener = listener
+//    }
+//
+//    interface MyOnTouchListener{
+//        fun onTouch( event: MotionEvent )
+//    }
+//
+//    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
+//        if (ev != null) {
+//            onTouchListener.onTouch(ev)
+//        }
+//
+//        return super.dispatchTouchEvent(ev)
+//    }
+
 }
