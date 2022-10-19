@@ -15,7 +15,6 @@ import com.preonboarding.customkeyboard.presentation.common.base.BaseActivity
 import com.preonboarding.customkeyboard.presentation.common.extension.showSnackbar
 import com.preonboarding.customkeyboard.presentation.databinding.ActivityInputBinding
 import com.preonboarding.customkeyboard.presentation.keyboard.QwertyKeyboard
-import com.preonboarding.customkeyboard.presentation.keyboard.shortcutkeys.ShortcutPopup
 import com.preonboarding.customkeyboard.presentation.ui.input.clipboard.ClipboardFragment
 import com.preonboarding.customkeyboard.presentation.ui.input.keyboard.KeyboardFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -128,22 +127,5 @@ class InputActivity : BaseActivity<ActivityInputBinding>() {
                 }
         }
     }
-
-//
-//    fun registerMyOnTouchListener( listener: MyOnTouchListener){
-//        onTouchListener = listener
-//    }
-//
-//    interface MyOnTouchListener{
-//        fun onTouch( event: MotionEvent )
-//    }
-//
-//    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
-//        if (ev != null) {
-//            onTouchListener.onTouch(ev)
-//        }
-//
-//        return super.dispatchTouchEvent(ev)
-//    }
 
 }
