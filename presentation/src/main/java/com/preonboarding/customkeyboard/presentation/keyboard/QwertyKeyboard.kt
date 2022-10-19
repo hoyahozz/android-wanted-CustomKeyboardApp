@@ -194,8 +194,9 @@ class QwertyKeyboard (
 
         for (i in 0..9){
             ShortcutViews[i].setOnClickListener {
-                inputConnection?.commitText(shortcutKeyText[i], 1)
+                //inputConnection?.commitText(shortcutKeyText[i], 1)
                 shortcutView.text = ShortcutViews[i].text.toString()
+                shortcutView.textSize=8F
                 popup.dismiss()
             }
         }
@@ -240,7 +241,10 @@ class QwertyKeyboard (
                 koreaLanguageMaker.directCommitHangul()
                 inputConnection?.commitText(keyTxt.text.toString(), 1)
             } catch (e: NumberFormatException) {
-                koreaLanguageMaker.commitHangul(keyTxt.text.toString().toCharArray().get(0))
+                for (n in keyTxt.text.toString().toCharArray().indices){
+                    koreaLanguageMaker.commitHangul(keyTxt.text.toString().toCharArray()[n])
+                }
+                //koreaLanguageMaker.commitHangul(keyTxt.text.toString().toCharArray().get(0))
             }
             if (isCaps) changeCaps()
 
